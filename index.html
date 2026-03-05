@@ -1,0 +1,1289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Neo Matime — Digital Resume</title>
+  <meta name="description" content="Cinematic, ultra-luxury interactive digital CV for Neo Matime — Certified Business Analyst." />
+
+  <!-- Fonts: luxury serif + clean sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+
+  <style>
+    :root{
+      --emerald-950:#081c17;
+      --emerald-900:#0C2F25;
+      --emerald-800:#0E3B2E;
+      --emerald-700:#0F4C3A;
+
+      --ivory:#F7F9F8;
+      --charcoal:#141716;
+      --muted:#5E6763;
+
+      --gold:#C6A75E;
+      --gold-soft: rgba(198,167,94,.25);
+      --line: rgba(20,23,22,.10);
+
+      --radius-xl: 28px;
+      --radius: 20px;
+
+      --shadow: 0 24px 70px rgba(0,0,0,.18);
+      --shadow-soft: 0 18px 48px rgba(0,0,0,.08);
+
+      --serif: "Cormorant Garamond", ui-serif, Georgia, serif;
+      --sans: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      color:var(--charcoal);
+      font-family: var(--sans);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(15,76,58,.18), transparent 55%),
+        radial-gradient(900px 600px at 90% 0%, rgba(198,167,94,.13), transparent 50%),
+        var(--ivory);
+      overflow-x:hidden;
+    }
+
+    /* Smooth-scroll wrapper (Lenis) */
+    #smooth-wrapper{ position:relative; }
+    #smooth-content{ position:relative; }
+
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:1200px; margin:0 auto; padding: 28px 18px 96px;}
+    .grid{display:grid; gap:18px;}
+
+    /* Top nav */
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(14px);
+      background: rgba(247,249,248,.65);
+      border-bottom:1px solid rgba(20,23,22,.07);
+    }
+    .topbar-inner{
+      max-width:1200px;
+      margin:0 auto;
+      padding: 14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .brand{display:flex; align-items:center; gap:12px; min-width:220px;}
+    .logo{
+      width:44px; height:44px;
+      border-radius:14px;
+      overflow:hidden;
+      background: linear-gradient(135deg, var(--emerald-700), var(--emerald-900));
+      box-shadow: 0 14px 28px rgba(12,47,37,.22);
+      border:1px solid rgba(255,255,255,.18);
+      display:grid; place-items:center;
+    }
+    .logo img{width:100%; height:100%; object-fit:cover}
+    .logo-fallback{
+      font-family: var(--serif);
+      color:#fff; font-weight:600;
+      letter-spacing:.6px; font-size:18px;
+    }
+    .brand-text{display:flex; flex-direction:column; line-height:1.05}
+    .brand-text strong{font-size:12px; letter-spacing:.22em}
+    .brand-text span{font-size:12px; color:var(--muted); margin-top:4px}
+
+    nav{
+      display:flex; gap:18px; align-items:center;
+      font-size:12px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color: rgba(20,23,22,.78);
+      overflow:auto;
+      scrollbar-width:none;
+    }
+    nav::-webkit-scrollbar{display:none}
+    nav a{position:relative; padding:10px 2px}
+    nav a::after{
+      content:"";
+      position:absolute; left:0; right:0; bottom:6px;
+      height:1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      transform: scaleX(0);
+      transform-origin:center;
+      transition: transform .35s ease;
+      opacity:.9;
+    }
+    nav a:hover::after{transform: scaleX(1)}
+
+    .actions{display:flex; gap:10px; align-items:center; justify-content:flex-end; min-width:220px;}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,.78);
+      border:1px solid rgba(20,23,22,.10);
+      box-shadow: 0 10px 22px rgba(0,0,0,.05);
+      font-size:12px;
+      color: rgba(20,23,22,.88);
+      white-space:nowrap;
+    }
+    .pill svg{width:16px; height:16px; opacity:.72}
+
+    /* HERO */
+    .hero{
+      margin-top:18px;
+      border-radius: var(--radius-xl);
+      overflow:hidden;
+      background: linear-gradient(135deg, var(--emerald-700), var(--emerald-900));
+      color:#fff;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.14);
+      position:relative;
+      isolation:isolate;
+    }
+    .hero::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(900px 500px at 20% 10%, rgba(198,167,94,.18), transparent 60%),
+        radial-gradient(900px 500px at 90% 30%, rgba(255,255,255,.12), transparent 55%);
+      z-index:-1;
+    }
+    .grain{
+      pointer-events:none;
+      position:absolute; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      opacity:.18;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      min-height: 560px;
+    }
+    .hero-left{
+      padding: 44px 44px 34px;
+      position:relative;
+    }
+    .tag{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.16);
+      color: rgba(255,255,255,.92);
+      font-size:12px;
+      letter-spacing:.08em;
+      backdrop-filter: blur(10px);
+    }
+    .tag .dot{
+      width:7px; height:7px; border-radius:99px; background: var(--gold);
+      box-shadow: 0 0 0 6px rgba(198,167,94,.16);
+    }
+
+    .hero h1{
+      margin:18px 0 8px;
+      font-family: var(--serif);
+      font-weight: 500;
+      letter-spacing: .04em;
+      font-size: clamp(40px, 4.6vw, 64px);
+      line-height: 1.02;
+    }
+    .hero h2{
+      margin: 0;
+      font-weight: 400;
+      color: rgba(255,255,255,.88);
+      font-size: 14px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+    .hero p{
+      margin: 18px 0 0;
+      color: rgba(255,255,255,.86);
+      max-width: 60ch;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .hero-metrics{
+      margin-top: 22px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .metric{
+      flex: 1 1 180px;
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius: 18px;
+      padding: 14px 14px;
+      backdrop-filter: blur(10px);
+    }
+    .metric .big{
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 20px;
+      letter-spacing: .04em;
+      color:#fff;
+    }
+    .metric .small{
+      margin-top: 6px;
+      font-size: 12.5px;
+      color: rgba(255,255,255,.82);
+      line-height: 1.3;
+    }
+
+    .hero-cta{
+      margin-top: 22px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.10);
+      color:#fff;
+      font-size:12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      cursor:pointer;
+      transition: transform .25s ease, background .25s ease;
+      backdrop-filter: blur(10px);
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.14)}
+    .btn.gold{
+      background: linear-gradient(135deg, rgba(198,167,94,.92), rgba(198,167,94,.72));
+      color: #141716;
+      border-color: rgba(255,255,255,.18);
+    }
+
+    /* Hero right: cinematic media + floating tiles */
+    .hero-right{
+      position:relative;
+      border-left:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.08);
+      overflow:hidden;
+    }
+    .hero-media{
+      position:absolute; inset:0;
+    }
+    .hero-video, .hero-image{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      transform: scale(1.03);
+      filter: contrast(1.04) saturate(1.06);
+      opacity:.92;
+    }
+    .hero-sheen{
+      position:absolute; inset:0;
+      background: linear-gradient(90deg, rgba(12,47,37,.80), rgba(12,47,37,.22));
+      pointer-events:none;
+    }
+
+    .headshot{
+      position:absolute;
+      left: 24px;
+      bottom: 24px;
+      width: 102px;
+      height: 102px;
+      border-radius: 26px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.22);
+      box-shadow: 0 26px 60px rgba(0,0,0,.30);
+      background: rgba(255,255,255,.10);
+      backdrop-filter: blur(12px);
+    }
+    .headshot img{width:100%; height:100%; object-fit:cover}
+
+    /* Floating image tiles (moving images around) */
+    .tiles{
+      position:absolute; inset:0;
+      pointer-events:none;
+    }
+    .tile{
+      position:absolute;
+      width: 178px;
+      height: 112px;
+      border-radius: 22px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 24px 60px rgba(0,0,0,.30);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(10px);
+      transform: translateZ(0);
+      opacity:.96;
+    }
+    .tile img{width:100%; height:100%; object-fit:cover; filter: contrast(1.04) saturate(1.06)}
+    .tile::after{
+      content:"";
+      position:absolute; inset:0;
+      background: radial-gradient(200px 120px at 30% 20%, rgba(198,167,94,.16), transparent 55%);
+      pointer-events:none;
+    }
+    .tile.t1{ top: 70px; right: 30px; width: 220px; height: 130px; }
+    .tile.t2{ top: 210px; right: 140px; }
+    .tile.t3{ top: 325px; right: 50px; width: 190px; height: 120px;}
+    .tile.t4{ top: 140px; right: 270px; width: 170px; height: 110px; opacity:.90;}
+
+    /* Apple-style statement sections */
+    section{ margin-top: 18px; }
+    .panel{
+      border-radius: var(--radius-xl);
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(20,23,22,.10);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(12px);
+      overflow:hidden;
+    }
+    .panel-inner{ padding: 42px 42px; }
+    .kicker{
+      font-size: 12px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(20,23,22,.70);
+    }
+    .statement{
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(34px, 4.4vw, 58px);
+      line-height: 1.05;
+      margin: 14px 0 0;
+      letter-spacing: .02em;
+    }
+    .statement .goldline{
+      position:relative;
+      display:inline-block;
+    }
+    .statement .goldline::after{
+      content:"";
+      position:absolute;
+      left:0; right:0; bottom: -8px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity:.95;
+      transform: scaleX(0);
+      transform-origin:center;
+    }
+    .lead{
+      margin-top: 18px;
+      max-width: 74ch;
+      color: rgba(20,23,22,.78);
+      font-size: 14.5px;
+      line-height: 1.85;
+    }
+
+    /* Experience: Apple-style chapters */
+    .chapters{
+      border-radius: var(--radius-xl);
+      overflow:hidden;
+      border:1px solid rgba(20,23,22,.08);
+      background: rgba(255,255,255,.78);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(12px);
+    }
+    .chapter{
+      display:grid;
+      grid-template-columns: 1fr .95fr;
+      min-height: 360px;
+      border-top: 1px solid rgba(20,23,22,.08);
+    }
+    .chapter:first-child{border-top:0}
+    .chapter-left{ padding: 34px 34px; }
+    .chapter-right{
+      position:relative;
+      overflow:hidden;
+      border-left: 1px solid rgba(20,23,22,.08);
+      background: rgba(12,47,37,.05);
+    }
+    .chapter-right img{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      filter: contrast(1.02) saturate(1.02);
+      opacity:.92;
+      transform: scale(1.02);
+    }
+    .chapter-right::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(90deg, rgba(247,249,248,.92), rgba(247,249,248,.35));
+      pointer-events:none;
+    }
+
+    .role{
+      font-family: var(--serif);
+      font-size: 30px;
+      margin: 8px 0 6px;
+      letter-spacing: .02em;
+    }
+    .org{
+      font-size: 12px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color: rgba(20,23,22,.65);
+    }
+    .when{ margin-top: 10px; color: rgba(20,23,22,.70); font-size: 13px; }
+    .bullets{ margin: 16px 0 0; padding-left: 18px; color: rgba(20,23,22,.86); }
+    .bullets li{ margin: 8px 0; font-size: 13.5px; line-height: 1.6; }
+
+    .impact-row{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top: 16px;
+    }
+    .impact{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(198,167,94,.35);
+      background: rgba(198,167,94,.10);
+      color: rgba(20,23,22,.88);
+      font-size: 12px;
+      letter-spacing:.08em;
+    }
+    .impact b{
+      font-family: var(--serif);
+      font-size: 16px;
+      letter-spacing:.02em;
+    }
+
+    /* Vlog / Film section */
+    .film{
+      border-radius: var(--radius-xl);
+      overflow:hidden;
+      background: linear-gradient(135deg, var(--emerald-900), var(--emerald-950));
+      color:#fff;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.12);
+      position:relative;
+    }
+    .film::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(900px 500px at 20% 20%, rgba(198,167,94,.16), transparent 60%),
+        radial-gradient(900px 500px at 80% 20%, rgba(255,255,255,.10), transparent 55%);
+      opacity:.95;
+      pointer-events:none;
+    }
+    .film-inner{
+      position:relative;
+      padding: 44px 44px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items:start;
+    }
+    .film h3{
+      margin: 10px 0 0;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(34px, 4.1vw, 54px);
+      line-height: 1.05;
+      letter-spacing:.02em;
+    }
+    .film p{
+      margin: 16px 0 0;
+      color: rgba(255,255,255,.86);
+      line-height: 1.8;
+      font-size: 14px;
+      max-width: 60ch;
+    }
+
+    .featured-video{
+      border-radius: 26px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 26px 70px rgba(0,0,0,.35);
+      position:relative;
+      min-height: 290px;
+    }
+    .featured-video video, .featured-video img{
+      width:100%; height:100%; object-fit:cover; display:block;
+      transform: scale(1.02);
+      opacity:.95;
+    }
+    .play{
+      position:absolute; inset:0;
+      display:grid; place-items:center;
+      cursor:pointer;
+      background: radial-gradient(400px 200px at 50% 60%, rgba(0,0,0,.35), transparent 60%);
+    }
+    .play .ring{
+      width: 76px; height: 76px;
+      border-radius: 999px;
+      border: 1px solid rgba(198,167,94,.75);
+      background: rgba(198,167,94,.10);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 50px rgba(0,0,0,.35);
+      display:grid; place-items:center;
+      transition: transform .25s ease, background .25s ease;
+    }
+    .play:hover .ring{ transform: scale(1.03); background: rgba(198,167,94,.16); }
+    .play svg{ width:22px; height:22px; fill: var(--gold); transform: translateX(2px); }
+
+    .filmstrip{
+      margin-top: 16px;
+      display:flex; gap:12px;
+      overflow:auto;
+      padding-bottom: 6px;
+      scrollbar-width:none;
+    }
+    .filmstrip::-webkit-scrollbar{display:none}
+    .thumb{
+      flex: 0 0 170px;
+      height: 108px;
+      border-radius: 20px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      position:relative;
+      cursor:pointer;
+      transform: translateZ(0);
+    }
+    .thumb img{ width:100%; height:100%; object-fit:cover; opacity:.92; transition: transform .35s ease; }
+    .thumb:hover img{ transform: scale(1.04); }
+    .thumb::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(0deg, rgba(12,47,37,.55), transparent 60%);
+    }
+    .thumb span{
+      position:absolute; left:12px; right:12px; bottom:10px;
+      font-size: 11px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(255,255,255,.92);
+    }
+
+    /* Projects (cards + takeover-ish modal reuse) */
+    .projects{
+      border-radius: var(--radius-xl);
+      overflow:hidden;
+      background: rgba(255,255,255,.78);
+      border:1px solid rgba(20,23,22,.10);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(12px);
+    }
+    .projects-inner{ padding: 34px 34px; }
+    .proj-grid{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .card{
+      border-radius: 24px;
+      overflow:hidden;
+      border:1px solid rgba(20,23,22,.10);
+      background: #fff;
+      box-shadow: 0 18px 46px rgba(0,0,0,.07);
+      cursor:pointer;
+      transform: translateZ(0);
+      position:relative;
+    }
+    .card .media{
+      height: 160px;
+      position:relative;
+      overflow:hidden;
+    }
+    .card .media img{
+      width:100%; height:100%;
+      object-fit:cover;
+      transition: transform .6s ease;
+      transform: scale(1.02);
+    }
+    .card:hover .media img{ transform: scale(1.06); }
+    .card .media::after{
+      content:"";
+      position:absolute; inset:0;
+      background: radial-gradient(300px 160px at 30% 20%, rgba(198,167,94,.18), transparent 55%),
+                  linear-gradient(0deg, rgba(12,47,37,.35), transparent 65%);
+      opacity:.95;
+    }
+    .card .body{
+      padding: 14px 14px 16px;
+    }
+    .card .title{
+      font-family: var(--serif);
+      font-size: 18px;
+      margin: 0;
+      letter-spacing:.02em;
+    }
+    .card .desc{
+      margin: 8px 0 0;
+      color: rgba(20,23,22,.72);
+      line-height: 1.6;
+      font-size: 13px;
+    }
+    .trace{
+      position:absolute; inset:0;
+      border-radius: 24px;
+      pointer-events:none;
+      border: 1px solid transparent;
+      transition: border-color .35s ease;
+    }
+    .card:hover .trace{ border-color: rgba(198,167,94,.55); }
+
+    /* Contact */
+    .contact{
+      border-radius: var(--radius-xl);
+      overflow:hidden;
+      background: linear-gradient(135deg, var(--emerald-950), var(--emerald-900));
+      color:#fff;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .contact-inner{
+      padding: 46px 42px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+    .contact h3{
+      margin:0;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(34px, 4.0vw, 56px);
+      letter-spacing:.02em;
+    }
+    .contact small{
+      display:block;
+      margin-top: 10px;
+      color: rgba(255,255,255,.80);
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-size: 11px;
+    }
+    .contact-actions{ display:flex; gap:10px; flex-wrap:wrap; }
+    .contact-actions a{ text-decoration:none; }
+
+    /* Modal */
+    .modal{
+      position:fixed; inset:0;
+      background: rgba(8,28,23,.72);
+      backdrop-filter: blur(14px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index: 200;
+    }
+    .modal.open{display:flex}
+    .modal-card{
+      width: min(980px, 96vw);
+      border-radius: 26px;
+      overflow:hidden;
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(255,255,255,.22);
+      box-shadow: 0 40px 110px rgba(0,0,0,.42);
+      position:relative;
+    }
+    .modal-top{
+      padding: 14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      background: rgba(247,249,248,.90);
+      border-bottom: 1px solid rgba(20,23,22,.10);
+    }
+    .modal-top strong{
+      font-size: 12px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color: rgba(20,23,22,.78);
+    }
+    .close{
+      border:none;
+      background: transparent;
+      cursor:pointer;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(20,23,22,.12);
+    }
+    .close:hover{ background: rgba(20,23,22,.04); }
+    .modal-body{
+      background: #000;
+      aspect-ratio: 16 / 9;
+      position:relative;
+    }
+    .modal-body iframe, .modal-body video{
+      width:100%; height:100%;
+      border:0;
+      display:block;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .hero-right{ border-left:0; border-top:1px solid rgba(255,255,255,.12); min-height: 380px; }
+      .hero-left{ padding: 36px 28px 26px; }
+      .film-inner{ grid-template-columns: 1fr; padding: 36px 28px; }
+      .chapter{ grid-template-columns: 1fr; }
+      .chapter-right{ min-height: 240px; border-left:0; border-top:1px solid rgba(20,23,22,.08); }
+      .panel-inner{ padding: 36px 28px; }
+      .projects-inner{ padding: 28px 28px; }
+      .proj-grid{ grid-template-columns: 1fr; }
+      .actions{ display:none; }
+      .tile{ display:none; } /* keep mobile clean */
+    }
+  </style>
+</head>
+
+<body>
+  <div id="smooth-wrapper">
+    <div id="smooth-content">
+
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-inner">
+          <div class="brand">
+            <div class="logo" aria-label="Logo">
+              <img src="assets/logo.png" alt="Logo"
+                onerror="this.remove(); this.parentElement.innerHTML='<div class=&quot;logo-fallback&quot;>NM</div>';">
+            </div>
+            <div class="brand-text">
+              <strong>NEO MATIME</strong>
+              <span>Certified Business Analyst</span>
+            </div>
+          </div>
+
+          <nav aria-label="Primary">
+            <a href="#statement">Statement</a>
+            <a href="#experience">Experience</a>
+            <a href="#film">Film</a>
+            <a href="#work">Work</a>
+            <a href="#contact">Contact</a>
+          </nav>
+
+          <div class="actions">
+            <a class="pill" href="mailto:matime95@icloud.com" title="Email">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="1.6"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.6"/></svg>
+              Email
+            </a>
+            <a class="pill" href="https://www.linkedin.com/in/neomatime" target="_blank" rel="noreferrer" title="LinkedIn">
+             <svg viewBox="0 0 24 24" fill="none"><path d="M6 9v12M6 6.5v.5M10 21v-7c0-2 1-3 3-3s3 1 3 3v7m0-7c0-2 1-3 3-3s3 1 3 3v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <main class="wrap">
+
+        <!-- HERO -->
+        <section class="hero" aria-label="Hero">
+          <div class="grain"></div>
+
+          <div class="hero-grid">
+            <div class="hero-left">
+              <div class="tag"><span class="dot"></span> Clarity Through Analysis</div>
+              <h1 class="reveal">Neo Matime</h1>
+              <h2 class="reveal">Certified Business Analyst • Insurance & Financial Services</h2>
+              <p class="reveal">
+                Results-oriented IT Business Analyst with 3+ years’ experience across insurance and financial services.
+                I bridge business and IT through disciplined requirements, stakeholder alignment, and production-grade delivery.
+              </p>
+
+              <div class="hero-metrics">
+                <div class="metric reveal">
+                  <div class="big" data-count="3">3+</div>
+                  <div class="small">Years BA experience across insurance & financial services</div>
+                </div>
+                <div class="metric reveal">
+                  <div class="big" data-count="20">20%</div>
+                  <div class="small">Operational efficiency improvement through workflow automation</div>
+                </div>
+                <div class="metric reveal">
+                  <div class="big">AgileBA</div>
+                  <div class="small">APMG Certified Agile Business Analyst</div>
+                </div>
+              </div>
+
+              <div class="hero-cta reveal">
+                <button class="btn gold" id="openIntroFilm">
+                  Watch Intro
+                  <span aria-hidden="true">→</span>
+                </button>
+                <a class="btn" href="#work">Explore Work</a>
+                <a class="btn" href="#contact">Contact</a>
+              </div>
+            </div>
+
+            <div class="hero-right" aria-label="Cinematic media">
+              <div class="hero-media">
+                <!-- Optional: use hero.mp4 if you have it; image fallback is hero.jpg -->
+                <video class="hero-video" autoplay muted loop playsinline preload="metadata"
+                  onerror="this.style.display='none'; document.querySelector('.hero-image').style.display='block';">
+                  <source src="assets/hero.mp4" type="video/mp4">
+                </video>
+                <img class="hero-image" src="assets/hero.jpg" alt="Hero image" style="display:none;">
+              </div>
+
+              <div class="hero-sheen"></div>
+
+              <div class="headshot" aria-label="Headshot placeholder">
+                <img src="assets/headshot.jpg" alt="Headshot">
+              </div>
+
+              <!-- MOVING TILES -->
+              <div class="tiles" aria-hidden="true">
+                <div class="tile t1"><img src="assets/tile-1.jpg" alt=""></div>
+                <div class="tile t2"><img src="assets/tile-2.jpg" alt=""></div>
+                <div class="tile t3"><img src="assets/tile-3.jpg" alt=""></div>
+                <div class="tile t4"><img src="assets/tile-4.jpg" alt=""></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- STATEMENT -->
+        <section id="statement" class="panel" aria-label="Statement">
+          <div class="panel-inner">
+            <div class="kicker reveal">The Statement</div>
+            <div class="statement reveal">
+              I translate complexity into <span class="goldline">clarity</span>.
+            </div>
+            <div class="lead reveal">
+              I operate where business intent meets technical execution — claims automation, premium collections,
+              and change governance. My work is designed for real environments: stakeholders, risk, compliance,
+              production stability, and measurable outcomes.
+            </div>
+          </div>
+        </section>
+
+        <!-- EXPERIENCE -->
+        <section id="experience" class="chapters" aria-label="Experience">
+          <div class="chapter">
+            <div class="chapter-left">
+              <div class="kicker reveal">Experience</div>
+              <div class="role reveal">Business Analyst</div>
+              <div class="org reveal">PSG Insure • Platform Solutions • Claims</div>
+              <div class="when reveal">September 2025 — Current</div>
+
+              <div class="impact-row reveal">
+                <div class="impact"><b>Claims</b> Systems & Process Enhancements</div>
+                <div class="impact"><b>UAT</b> + Production Validation</div>
+                <div class="impact"><b>CAB</b> Change Governance</div>
+              </div>
+
+              <ul class="bullets reveal">
+                <li>Serving as a Claims Business Analyst, enhancing claims systems and processes.</li>
+                <li>Overseeing production and functionality of WhatsApp Claims Automation.</li>
+                <li>Creating detailed user story specifications for enhancements and new functionality.</li>
+                <li>Collaborating with developers and stakeholders to align delivery and expectations.</li>
+              </ul>
+            </div>
+            <div class="chapter-right">
+              <img src="assets/suit-1.jpg" alt="Claims automation visual placeholder">
+            </div>
+          </div>
+
+          <div class="chapter">
+            <div class="chapter-left">
+              <div class="kicker reveal">Chapter II</div>
+              <div class="role reveal">Junior Business Analyst</div>
+              <div class="org reveal">Hollard Insure IT</div>
+              <div class="when reveal">May 2023 — August 2025</div>
+
+              <div class="impact-row reveal">
+                <div class="impact"><b>20%</b> Operational Efficiency Gain</div>
+                <div class="impact"><b>DebiCheck</b> Premium Collections</div>
+                <div class="impact"><b>SDLC</b> Governance & Traceability</div>
+              </div>
+
+              <ul class="bullets reveal">
+                <li>Led automation of policy and survey workflows, achieving a 20% increase in operational efficiency.</li>
+                <li>Facilitated JAD sessions and requirement alignment workshops across teams.</li>
+                <li>Optimized premium collections by leading the DebiCheck project.</li>
+                <li>Supported VAT change delivery and cross-functional implementation governance.</li>
+              </ul>
+            </div>
+            <div class="chapter-right">
+              <img src="assets/office.png" alt="Premium collections visual placeholder">
+            </div>
+          </div>
+
+          <div class="chapter">
+            <div class="chapter-left">
+              <div class="kicker reveal">Chapter I</div>
+              <div class="role reveal">Business Analyst Intern</div>
+              <div class="org reveal">Hollard Insure IT</div>
+              <div class="when reveal">May 2022 — April 2023</div>
+
+              <div class="impact-row reveal">
+                <div class="impact"><b>Data</b> Models & Mapping</div>
+                <div class="impact"><b>BPMN</b> + UML Diagrams</div>
+                <div class="impact"><b>Migration</b> Gap Analysis</div>
+              </div>
+
+              <ul class="bullets reveal">
+                <li>Created data models and mapped data flows for reporting improvements.</li>
+                <li>Supported Agile teams with sprint planning, backlog grooming, and user stories.</li>
+                <li>Developed BPMN process flows and UML diagrams for future-state clarity.</li>
+                <li>Performed claims data mapping to support legacy-to-new platform migration.</li>
+              </ul>
+            </div>
+            <div class="chapter-right">
+              <img src="assets/graduate.jpg" alt="Architecture / diagrams visual placeholder">
+            </div>
+          </div>
+        </section>
+
+        <!-- FILM / VLOG -->
+        <section id="film" class="film" aria-label="Beyond the Analyst — Film">
+          <div class="grain"></div>
+          <div class="film-inner">
+            <div>
+              <div class="kicker reveal" style="color: rgba(255,255,255,.75);">Film</div>
+              <h3 class="reveal">Beyond the Analyst.</h3>
+              <p class="reveal">
+                A refined human layer — leadership, discipline, faith, and creativity.
+                This section is built like a luxury campaign: cinematic, intimate, and intentional.
+              </p>
+
+              <div class="filmstrip reveal" aria-label="Vlog thumbnails">
+                <div class="thumb" data-video="https://www.youtube.com/embed/VIDEO_ID_1">
+                  <img src="assets/vlog-1.jpg" alt="Vlog thumbnail 1"><span>Leadership</span>
+                </div>
+                <div class="thumb" data-video="https://www.youtube.com/embed/VIDEO_ID_2">
+                  <img src="assets/vlog-2.jpg" alt="Vlog thumbnail 2"><span>Discipline</span>
+                </div>
+                <div class="thumb" data-video="https://www.youtube.com/embed/VIDEO_ID_3">
+                  <img src="assets/vlog-3.jpg" alt="Vlog thumbnail 3"><span>Creativity</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="featured-video reveal" role="button" tabindex="0" aria-label="Play featured film">
+              <!-- Use a muted loop MP4 preview if you have it; otherwise keep hero.jpg -->
+              <video autoplay muted loop playsinline preload="metadata"
+                onerror="this.style.display='none'; this.parentElement.querySelector('img').style.display='block';">
+                <source src="assets/hero.mp4" type="video/mp4">
+              </video>
+              <img src="assets/hero.jpg" alt="Featured film image" style="display:none;">
+              <div class="play" id="openFeaturedFilm">
+                <div class="ring" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M9 7v10l9-5-9-5z"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- WORK / PROJECTS -->
+        <section id="work" class="projects" aria-label="Work">
+          <div class="projects-inner">
+            <div class="kicker reveal">Work</div>
+            <div class="statement reveal" style="font-size: clamp(28px, 3.6vw, 44px);">
+              Case studies, built for production.
+            </div>
+            <div class="lead reveal" style="max-width: 80ch;">
+              Click a card to open a full-screen cinematic view (video or walkthrough placeholder). Replace images and links anytime.
+            </div>
+
+            <div class="proj-grid">
+              <div class="card reveal" data-title="WhatsApp Claims Automation"
+                   data-video="https://www.youtube.com/watch?v=HPDPWTNptws"
+                   data-desc="Production oversight, validation, and alignment between automated claim flows and the claims system.">
+                <div class="media"><img src="assets/project-1.jpg" alt="WhatsApp Claims Automation"></div>
+                <div class="body">
+                  <h4 class="title">WhatsApp Claims Automation</h4>
+                  <p class="desc">Production oversight • validation • claims alignment</p>
+                </div>
+                <div class="trace"></div>
+              </div>
+
+              <div class="card reveal" data-title="DebiCheck Optimization"
+                   data-video="https://www.youtube.com/embed/VIDEO_ID_CASE_2"
+                   data-desc="Led DebiCheck initiative to optimize premium collections and improve approval efficiency.">
+                <div class="media"><img src="assets/project-2.jpg" alt="DebiCheck"></div>
+                <div class="body">
+                  <h4 class="title">DebiCheck Optimization</h4>
+                  <p class="desc">Premium collections • governance • delivery</p>
+                </div>
+                <div class="trace"></div>
+              </div>
+
+              <div class="card reveal" data-title="AI Prompt Engineering (Nexus)"
+                   data-video="https://www.youtube.com/embed/VIDEO_ID_CASE_3"
+                   data-desc="Winner of internal Microsoft Copilot Prompt-a-thon — AI-driven solutions for business queries via prompt engineering.">
+                <div class="media"><img src="assets/project-3.jpg" alt="AI Prompt Engineering"></div>
+                <div class="body">
+                  <h4 class="title">AI Prompt Engineering</h4>
+                  <p class="desc">Innovation • structured thinking • Copilot</p>
+                </div>
+                <div class="trace"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="contact" aria-label="Contact">
+          <div class="grain"></div>
+          <div class="contact-inner">
+            <div>
+              <h3 class="reveal">Let’s build what matters.</h3>
+              <small class="reveal">Elegant systems • measurable outcomes • calm execution</small>
+            </div>
+            <div class="contact-actions reveal">
+              <a class="btn gold" href="mailto:matime95@icloud.com">Email</a>
+              <a class="btn" href="https://www.linkedin.com/in/neomatime" target="_blank" rel="noreferrer">LinkedIn</a>
+              <a class="btn" href="CV/Neo_Matime_CV.pdf" onclick="alert(CV/Neo_Matime_CV.pdf)">Download CV</a>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- VIDEO MODAL -->
+      <div class="modal" id="modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-label="Video Player">
+          <div class="modal-top">
+            <strong id="modalTitle">Film</strong>
+            <button class="close" id="closeModal" aria-label="Close">
+              ✕
+            </button>
+          </div>
+          <div class="modal-body" id="modalBody">
+            <!-- injected iframe/video -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Libraries (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
+
+  <script>
+    // ===========================
+    // Smooth scroll (Lenis)
+    // ===========================
+    const lenis = new Lenis({
+      lerp: 0.10,
+      smoothWheel: true,
+      wheelMultiplier: 0.90
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Make anchor navigation feel cinematic with Lenis
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href');
+        const el = document.querySelector(id);
+        if (!el) return;
+        e.preventDefault();
+        lenis.scrollTo(el, { offset: -80, duration: 1.1 });
+      });
+    });
+
+    // ===========================
+    // GSAP animations
+    // ===========================
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Reveal elements
+    gsap.utils.toArray(".reveal").forEach((el) => {
+      gsap.fromTo(el,
+        { y: 18, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+          }
+        }
+      );
+    });
+
+    // Animate statement goldline underline
+    const goldline = document.querySelector(".statement .goldline");
+    if (goldline) {
+      gsap.to(goldline, {
+        scrollTrigger: {
+          trigger: goldline,
+          start: "top 75%",
+        },
+        onStart: () => goldline.style.setProperty("--underline", "1")
+      });
+      // CSS underline uses transform; do it via GSAP for precision:
+      const underline = goldline.querySelector?.(":after");
+    }
+    // Directly animate after pseudo by toggling class
+    ScrollTrigger.create({
+      trigger: "#statement",
+      start: "top 70%",
+      onEnter: () => document.querySelector("#statement .goldline")?.classList.add("u")
+    });
+    // Add CSS rule dynamically for underline activation
+    const style = document.createElement("style");
+    style.textContent = `
+      .goldline.u::after{ transform: scaleX(1) !important; transition: transform 1.1s cubic-bezier(.16,1,.3,1); }
+    `;
+    document.head.appendChild(style);
+
+    // Parallax hero tiles (moving images around)
+    gsap.utils.toArray(".tile").forEach((tile, i) => {
+      const dy = 18 + i * 10;
+      gsap.to(tile, {
+        y: `+=${dy}`,
+        duration: 6 + i,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1
+      });
+      gsap.to(tile, {
+        x: i % 2 === 0 ? "+=10" : "-=10",
+        duration: 7 + i,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1
+      });
+    });
+
+    // Hero media parallax on scroll
+    gsap.to(".hero-video, .hero-image", {
+      y: 24,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+
+    // Metric counters (only for numeric ones)
+    gsap.utils.toArray("[data-count]").forEach((el) => {
+      const target = parseInt(el.getAttribute("data-count"), 10);
+      const suffix = el.textContent.includes("%") ? "%" : "+";
+      const obj = { val: 0 };
+      gsap.to(obj, {
+        val: target,
+        duration: 1.2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%"
+        },
+        onUpdate: () => {
+          el.textContent = Math.round(obj.val) + suffix;
+        }
+      });
+    });
+
+    // ===========================
+    // Video modal: YouTube embeds or local MP4
+    // ===========================
+    const modal = document.getElementById("modal");
+    const modalBody = document.getElementById("modalBody");
+    const modalTitle = document.getElementById("modalTitle");
+    const closeModalBtn = document.getElementById("closeModal");
+
+    function openModal({ title = "Film", youtubeUrl = null, mp4 = null }) {
+      modalTitle.textContent = title;
+      modalBody.innerHTML = "";
+
+      if (youtubeUrl) {
+        const iframe = document.createElement("iframe");
+        iframe.src = youtubeUrl + (youtubeUrl.includes("?") ? "&" : "?") + "autoplay=1&mute=0";
+        iframe.allow = "autoplay; encrypted-media; picture-in-picture";
+        iframe.allowFullscreen = true;
+        modalBody.appendChild(iframe);
+      } else if (mp4) {
+        const video = document.createElement("video");
+        video.src = mp4;
+        video.controls = true;
+        video.autoplay = true;
+        video.playsInline = true;
+        modalBody.appendChild(video);
+      } else {
+        // fallback placeholder
+        modalBody.innerHTML = "<div style='color:#fff;display:grid;place-items:center;height:100%;font-family:Inter'>Add a YouTube link or MP4 source.</div>";
+      }
+
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      modalBody.innerHTML = "";
+      document.body.style.overflow = "";
+    }
+
+    closeModalBtn.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+    window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+
+    // Intro film button (replace with your real intro YouTube link)
+    document.getElementById("openIntroFilm").addEventListener("click", () => {
+      openModal({
+        title: "Intro Film — Neo Matime",
+        youtubeUrl: "https://www.youtube.com/embed/VIDEO_ID_INTRO"
+      });
+    });
+
+    // Featured film overlay click
+    document.getElementById("openFeaturedFilm").addEventListener("click", () => {
+      openModal({
+        title: "Beyond the Analyst — Featured Film",
+        youtubeUrl: "https://www.youtube.com/embed/VIDEO_ID_FEATURED"
+      });
+    });
+
+    // Filmstrip thumbs
+    document.querySelectorAll(".thumb[data-video]").forEach((t) => {
+      t.addEventListener("click", () => {
+        openModal({
+          title: "Beyond the Analyst",
+          youtubeUrl: t.getAttribute("data-video")
+        });
+      });
+    });
+
+    // Project cards
+    document.querySelectorAll(".card[data-video]").forEach((c) => {
+      c.addEventListener("click", () => {
+        openModal({
+          title: c.getAttribute("data-title") || "Case Study",
+          youtubeUrl: c.getAttribute("data-video")
+        });
+      });
+    });
+  </script>
+</body>
+</html>
